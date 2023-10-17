@@ -65,6 +65,13 @@ EOF
 ----
 
 
+[NOTE]
+====
+If you are upgrading from an older version of Neo4j, you may need to clear the package manager cache before neo4j packages become available:
+
+`yum clean dbcache`
+====
+
 === Install Neo4j
 
 Install Neo4j as `root` using the following commands depending on which edition you are using:
