@@ -7,19 +7,19 @@ APOC core is shipped with Neo4j, but it is not installed in the Neo4j _plugins_ 
 If APOC core is the _only_ plugin that you want to add to Neo4j, it is not necessary to perform plugin installation as described in xref:kubernetes/configuration.adoc#operations-installing-plugins[Install Plugins].
 Instead, you can configure the helm deployment to use APOC core by upgrading the deployment with these additional settings in the _values.yaml_ file:
 
-. Configure APOC core by loading and unresticting the functions and procedures you need (for more details see link:{neo4j-docs-base-uri}/apoc/{page-version}/installation/#restricted[APOC installation guide]).
+. Configure APOC core by loading and unresticting the functions and procedures you need (for more details see link:{neo4j-docs-base-uri}/apoc/{page-version}/installation/#restricted[APOC installation guide]).  
+The example below would allow only routines from apoc.math and apoc.cypher.
 For example:
 +
 [source, yaml]
 ----
 config:
-  server.directories.plugins: "/var/lib/neo4j/labs"
-  dbms.security.procedures.unrestricted: "apoc.cypher.doIt"
+  dbms.security.procedures.unrestricted: "apoc.*"
   server.config.strict_validation.enabled: "false"
-  dbms.security.procedures.allowlist: "apoc.math.maxInteger,apoc.cypher.doIt"
+  dbms.security.procedures.allowlist: "apoc.math.*,apoc.cypher.*"
 ----
 +
-. Under `apoc_config`, configure the APOC settings that you want, for example:
+. Under `apoc_config`, configure the APOC settings that you want.  These behave if they were in an apoc.conf file. for example:
 +
 [source, yaml]
 ----
@@ -29,7 +29,7 @@ apoc_config:
   apoc.import.file.enabled: "true"
 ----
 
-. Under `env`, set the `NEO4J_PLUGINS` variable to `'["apoc"]'`, for example:
+. Under `env`, set the `NEO4J_PLUGINS` variable to `'["apoc"]' .  This would cause the image to load the apoc library.  for example:
 +
 [source, yaml]
 ----
